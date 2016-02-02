@@ -17,6 +17,10 @@ namespace Grain
         public int probability;
         public bool blocked;
 
+        public bool recrystallized;
+        public int H;
+        public bool border;
+
         public Cell()
         {
             state = 0;
@@ -26,6 +30,9 @@ namespace Grain
             probability = 0;
             blocked = false;
 
+            recrystallized = false;
+            H = 0;
+            border = false;
         }
     }
 

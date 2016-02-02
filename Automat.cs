@@ -32,10 +32,11 @@ namespace Grain
         public bool areBordersSet;
         public int nucleonsCount;
         public List<int> blockedID;
-
         public int start, endX, endY;
-
         public bool startGrowth;
+        public List<MyPoint> listOfBordersRecry;
+
+        public List<MyColor> colorsForRecry;
 
 
         public Automat(int x, int y)
@@ -48,6 +49,21 @@ namespace Grain
             blockedID = new List<int>();
 
             startGrowth = false;
+
+            addColorsForRecry();
+        }
+
+        public void addColorsForRecry()
+        {
+            colorsForRecry = new List<MyColor>();
+            colorsForRecry.Add(new MyColor(255, 0, 0));
+            colorsForRecry.Add(new MyColor(38, 21, 85));
+            colorsForRecry.Add(new MyColor(240, 8, 62));
+            colorsForRecry.Add(new MyColor(210, 33, 68));
+            colorsForRecry.Add(new MyColor(22, 11, 44));
+            colorsForRecry.Add(new MyColor(107, 5, 5));
+            colorsForRecry.Add(new MyColor(134, 14, 42));
+            
         }
 
         public void createGrid()
@@ -80,6 +96,7 @@ namespace Grain
 
             }
         }
+
         public void createSingleCell(int x, int y)
         {
             if (firstGrid[x][y].state == 0)
@@ -190,6 +207,7 @@ namespace Grain
                         if (firstGrid[i][j].myNeighbors[k].state != firstGrid[i][j].state)
                         {
                             listOfBorders.Add(new MyPoint(i,j));
+                            break;
                         }
                     }
                 }
@@ -226,6 +244,7 @@ namespace Grain
                 for (int j = 0; j < length; j++)
                 {
                     firstGrid[mod(x0 + i, this.gridSizeX)][mod(y0 + j, this.gridSizeY)].state = -1;
+                    firstGrid[mod(x0 + i, this.gridSizeX)][mod(y0 + j, this.gridSizeY)].H = 0;
                 }
         }
 
@@ -240,6 +259,7 @@ namespace Grain
                     for (int j = 0; j < length; j++)
                     {
                         firstGrid[mod(randX + i, this.gridSizeX)][mod(randY + j, this.gridSizeY)].state = -1;
+                        firstGrid[mod(randX + i, this.gridSizeX)][mod(randY + j, this.gridSizeY)].H = 0;
                     }
 
             }
@@ -261,12 +281,11 @@ namespace Grain
                         if (x * x + y * y <= radius * radius + radius * 0.8)
                         {
                             firstGrid[mod(randX + x, this.gridSizeX)][mod(randY + y, this.gridSizeY)].state = -1;
+                            firstGrid[mod(randX + x, this.gridSizeX)][mod(randY + y, this.gridSizeY)].H = 0;
                         }
-
                     }
                 }
             }
-
         }
 
         public void setCircularInclusions(int x0, int y0, int radius)
@@ -278,6 +297,7 @@ namespace Grain
                     if (x * x + y * y <= radius * radius + radius * 0.8)
                     {
                         firstGrid[mod(x0 + x, this.gridSizeX)][mod(y0 + y, this.gridSizeY)].state = -1;
+                        firstGrid[mod(x0 + x, this.gridSizeX)][mod(y0 + y, this.gridSizeY)].H = 0;
                     }
                     
                 }
@@ -559,6 +579,181 @@ namespace Grain
                     firstGrid[xx][yy].color = oldColor;
                 }
 
+                Cells.RemoveAt(randCell);
+
+            }
+            
+        }
+
+        public void setBordersForRecry(bool flag)
+        {
+            listOfBordersRecry = new List<MyPoint>();
+
+            if (flag == true)
+            {
+                //listOfBordersRecry = new List<MyPoint>();
+                for (int i = start; i < endX; i++)
+                {
+                    for (int j = start; j < endY; j++)
+                    {
+                        for (int k = 0; k < 8; ++k)
+                        {
+                            if (firstGrid[i][j].myNeighbors[k].state != firstGrid[i][j].state && firstGrid[i][j].recrystallized == false && firstGrid[i][j].state != -1 && firstGrid[i][j].myNeighbors[k].state != -1)
+                            {
+                                firstGrid[i][j].border = true;
+                                listOfBordersRecry.Add(new MyPoint(i, j));
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = start; i < endX; i++)
+                {
+                    for (int j = start; j < endY; j++)
+                    {
+                        if (firstGrid[i][j].recrystallized == false && firstGrid[i][j].state != -1)
+                        {
+                            firstGrid[i][j].border = true;
+                            listOfBordersRecry.Add(new MyPoint(i, j));
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public void setNewState(int count)
+        {
+            if (listOfBordersRecry.Count() != 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    int rand, randCol;
+                    rand = random.Next(0, listOfBordersRecry.Count);
+
+                    int x = listOfBordersRecry[rand].x;
+                    int y = listOfBordersRecry[rand].y;
+
+                    if (firstGrid[x][y].recrystallized == false && firstGrid[x][y].state != -1)
+                    {
+                        randCol = random.Next(0, colorsForRecry.Count());
+                        this.firstGrid[x][y].state = id;
+                        this.firstGrid[x][y].recrystallized = true;
+                        this.firstGrid[x][y].H = 0;
+                        this.firstGrid[x][y].color = colorsForRecry[randCol];
+                        id++;
+
+                    }
+                }
+            }
+            
+        }
+
+        public void distributeEnergy(int HB, int HG)
+        {
+            for (int i = start; i < endX; i++)
+            {
+                for (int j = start; j < endY; j++)
+                {
+                    if (firstGrid[i][j].border)
+                        firstGrid[i][j].H = HB;
+                    else
+                        firstGrid[i][j].H = HG;
+                }
+            }
+        }
+
+        public int energyCountRecry(int x, int y, string neighborhood)
+        {
+            int counter = 0;
+
+            if (neighborhood == "Moore")
+            {
+                for (int i = 0; i <= 7; i++)
+                {
+                    if (firstGrid[x][y].state != firstGrid[x][y].myNeighbors[i].state && firstGrid[x][y].state != -1 && firstGrid[x][y].myNeighbors[i].state != -1)
+                        counter++;
+                }
+            }
+            else if (neighborhood == "Von Neumann")
+            {
+                for (int i = 2; i < 6; i++)
+                {
+                    if (firstGrid[x][y].state != firstGrid[x][y].myNeighbors[i].state)
+                        counter++;
+                }
+            }
+
+            return counter;
+        }
+
+        public void recrystallization(string neighborhood)
+        {             
+            List<MyPoint> Cells = new List<MyPoint>();
+            int E1, E2, delta, oldState, newState;
+
+          //  setBordersForRecry();
+          //  distributeEnergy(10);
+
+            for (int i = start; i < endX; i++)
+            {
+                for (int j = start; j < endY; j++)
+                {
+                    Cells.Add(new MyPoint(i, j));
+                }
+            }
+            
+            while (Cells.Count != 0)
+            {
+                int randCell = random.Next(0, Cells.Count);
+
+                int xx = Cells[randCell].x;
+                int yy = Cells[randCell].y;
+
+                oldState = firstGrid[xx][yy].state;
+                MyColor oldColor = firstGrid[xx][yy].color;
+
+                E1 = energyCount(xx, yy, neighborhood) + firstGrid[xx][yy].H;
+
+                int randNeight = 0;
+
+                if (neighborhood == "Moore")
+                {
+                    randNeight = random.Next(0, 8);
+                }
+                else if (neighborhood == "Von Neumann")
+                {
+                    randNeight = random.Next(2, 6);
+                }
+
+                newState = firstGrid[xx][yy].myNeighbors[randNeight].state;
+
+                if (firstGrid[xx][yy].myNeighbors[randNeight].recrystallized == true && oldState != newState && firstGrid[xx][yy].state != -1)
+                {
+                    firstGrid[xx][yy].state = firstGrid[xx][yy].myNeighbors[randNeight].state;
+                    firstGrid[xx][yy].color = firstGrid[xx][yy].myNeighbors[randNeight].color;
+
+
+                    E2 = energyCount(xx, yy, neighborhood);
+
+                    delta = E2 - E1;
+
+                    if (delta > 0)
+                    {
+                        firstGrid[xx][yy].state = oldState;
+                        firstGrid[xx][yy].color = oldColor;
+                    }
+                    else
+                    {
+                        firstGrid[xx][yy].recrystallized = true;
+                        firstGrid[xx][yy].H = 0;
+                    }
+
+                }
                 Cells.RemoveAt(randCell);
 
             }

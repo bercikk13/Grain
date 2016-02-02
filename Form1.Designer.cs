@@ -78,6 +78,27 @@ namespace Grain
             this.comboBoxMCNeighborhood = new System.Windows.Forms.ComboBox();
             this.textBoxMCAmount = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.checkBoxHetero = new System.Windows.Forms.CheckBox();
+            this.textBoxEnergyHGrain = new System.Windows.Forms.TextBox();
+            this.textBoxInStep = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textBoxRecryFactor = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.textBoxRecryNucleons = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.radioButtonSetOnce = new System.Windows.Forms.RadioButton();
+            this.radioButtonRekryDecr = new System.Windows.Forms.RadioButton();
+            this.radioButtonRecryIncr = new System.Windows.Forms.RadioButton();
+            this.radioButtonRekryConst = new System.Windows.Forms.RadioButton();
+            this.textBoxStepsRekry = new System.Windows.Forms.TextBox();
+            this.textBoxEnergyHBoundary = new System.Windows.Forms.TextBox();
+            this.buttonShowEnergy = new System.Windows.Forms.Button();
+            this.buttonDistrEnergy = new System.Windows.Forms.Button();
+            this.buttonRunRecry = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PB)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -85,14 +106,15 @@ namespace Grain
             this.groupBox4.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // PB
             // 
             this.PB.BackColor = System.Drawing.Color.White;
-            this.PB.Location = new System.Drawing.Point(187, 12);
+            this.PB.Location = new System.Drawing.Point(423, 12);
             this.PB.Name = "PB";
-            this.PB.Size = new System.Drawing.Size(480, 423);
+            this.PB.Size = new System.Drawing.Size(546, 549);
             this.PB.TabIndex = 0;
             this.PB.TabStop = false;
             this.PB.Click += new System.EventHandler(this.PB_Click);
@@ -102,7 +124,7 @@ namespace Grain
             // 
             this.runOneStep.Location = new System.Drawing.Point(118, 102);
             this.runOneStep.Name = "runOneStep";
-            this.runOneStep.Size = new System.Drawing.Size(45, 43);
+            this.runOneStep.Size = new System.Drawing.Size(45, 19);
             this.runOneStep.TabIndex = 1;
             this.runOneStep.Text = "1 step";
             this.runOneStep.UseVisualStyleBackColor = true;
@@ -246,7 +268,7 @@ namespace Grain
             // 
             this.runAutomat.Location = new System.Drawing.Point(13, 102);
             this.runAutomat.Name = "runAutomat";
-            this.runAutomat.Size = new System.Drawing.Size(99, 43);
+            this.runAutomat.Size = new System.Drawing.Size(99, 19);
             this.runAutomat.TabIndex = 17;
             this.runAutomat.Text = "Run";
             this.runAutomat.UseVisualStyleBackColor = true;
@@ -254,9 +276,9 @@ namespace Grain
             // 
             // clear
             // 
-            this.clear.Location = new System.Drawing.Point(13, 149);
+            this.clear.Location = new System.Drawing.Point(13, 127);
             this.clear.Name = "clear";
-            this.clear.Size = new System.Drawing.Size(150, 22);
+            this.clear.Size = new System.Drawing.Size(150, 20);
             this.clear.TabIndex = 18;
             this.clear.Text = "Clear ";
             this.clear.UseVisualStyleBackColor = true;
@@ -306,7 +328,7 @@ namespace Grain
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.buttonSetInclusions);
             this.groupBox1.Controls.Add(this.textBoxInclusions);
-            this.groupBox1.Location = new System.Drawing.Point(12, 363);
+            this.groupBox1.Location = new System.Drawing.Point(12, 335);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(169, 114);
             this.groupBox1.TabIndex = 23;
@@ -420,9 +442,9 @@ namespace Grain
             this.groupBox4.Controls.Add(this.runAutomat);
             this.groupBox4.Controls.Add(this.label5);
             this.groupBox4.Controls.Add(this.textBoxSteps);
-            this.groupBox4.Location = new System.Drawing.Point(12, 180);
+            this.groupBox4.Location = new System.Drawing.Point(12, 176);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(169, 177);
+            this.groupBox4.Size = new System.Drawing.Size(169, 153);
             this.groupBox4.TabIndex = 26;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = " Simulation";
@@ -507,7 +529,7 @@ namespace Grain
             this.groupBox5.Controls.Add(this.label12);
             this.groupBox5.Controls.Add(this.buttonRunMC);
             this.groupBox5.Controls.Add(this.buttonSetMCCells);
-            this.groupBox5.Location = new System.Drawing.Point(187, 441);
+            this.groupBox5.Location = new System.Drawing.Point(12, 468);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(405, 77);
             this.groupBox5.TabIndex = 29;
@@ -566,11 +588,222 @@ namespace Grain
             this.label12.TabIndex = 28;
             this.label12.Text = "ID Amount";
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label20);
+            this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Controls.Add(this.checkBoxHetero);
+            this.groupBox6.Controls.Add(this.textBoxEnergyHGrain);
+            this.groupBox6.Controls.Add(this.textBoxInStep);
+            this.groupBox6.Controls.Add(this.label18);
+            this.groupBox6.Controls.Add(this.textBoxRecryFactor);
+            this.groupBox6.Controls.Add(this.label17);
+            this.groupBox6.Controls.Add(this.textBoxRecryNucleons);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Controls.Add(this.label15);
+            this.groupBox6.Controls.Add(this.radioButtonSetOnce);
+            this.groupBox6.Controls.Add(this.radioButtonRekryDecr);
+            this.groupBox6.Controls.Add(this.radioButtonRecryIncr);
+            this.groupBox6.Controls.Add(this.radioButtonRekryConst);
+            this.groupBox6.Controls.Add(this.textBoxStepsRekry);
+            this.groupBox6.Controls.Add(this.textBoxEnergyHBoundary);
+            this.groupBox6.Controls.Add(this.buttonShowEnergy);
+            this.groupBox6.Controls.Add(this.buttonDistrEnergy);
+            this.groupBox6.Controls.Add(this.buttonRunRecry);
+            this.groupBox6.Location = new System.Drawing.Point(187, 12);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(219, 260);
+            this.groupBox6.TabIndex = 30;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Recrystallization";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(138, 63);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(49, 13);
+            this.label20.TabIndex = 21;
+            this.label20.Text = "H grains:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(135, 20);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(73, 13);
+            this.label19.TabIndex = 20;
+            this.label19.Text = "H boundaries:";
+            // 
+            // checkBoxHetero
+            // 
+            this.checkBoxHetero.AutoSize = true;
+            this.checkBoxHetero.Location = new System.Drawing.Point(10, 229);
+            this.checkBoxHetero.Name = "checkBoxHetero";
+            this.checkBoxHetero.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxHetero.TabIndex = 19;
+            this.checkBoxHetero.Text = "Nucl on boudaries";
+            this.checkBoxHetero.UseVisualStyleBackColor = true;
+            // 
+            // textBoxEnergyHGrain
+            // 
+            this.textBoxEnergyHGrain.Location = new System.Drawing.Point(138, 78);
+            this.textBoxEnergyHGrain.Name = "textBoxEnergyHGrain";
+            this.textBoxEnergyHGrain.Size = new System.Drawing.Size(70, 20);
+            this.textBoxEnergyHGrain.TabIndex = 18;
+            // 
+            // textBoxInStep
+            // 
+            this.textBoxInStep.Location = new System.Drawing.Point(138, 198);
+            this.textBoxInStep.Name = "textBoxInStep";
+            this.textBoxInStep.Size = new System.Drawing.Size(70, 20);
+            this.textBoxInStep.TabIndex = 17;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(138, 182);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(42, 13);
+            this.label18.TabIndex = 16;
+            this.label18.Text = "In step:";
+            // 
+            // textBoxRecryFactor
+            // 
+            this.textBoxRecryFactor.Location = new System.Drawing.Point(138, 159);
+            this.textBoxRecryFactor.Name = "textBoxRecryFactor";
+            this.textBoxRecryFactor.Size = new System.Drawing.Size(70, 20);
+            this.textBoxRecryFactor.TabIndex = 15;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(138, 143);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(40, 13);
+            this.label17.TabIndex = 14;
+            this.label17.Text = "Factor:";
+            // 
+            // textBoxRecryNucleons
+            // 
+            this.textBoxRecryNucleons.Location = new System.Drawing.Point(138, 120);
+            this.textBoxRecryNucleons.Name = "textBoxRecryNucleons";
+            this.textBoxRecryNucleons.Size = new System.Drawing.Size(70, 20);
+            this.textBoxRecryNucleons.TabIndex = 13;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(138, 104);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(55, 13);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "Nucleons:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(7, 201);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(34, 13);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "Steps";
+            // 
+            // radioButtonSetOnce
+            // 
+            this.radioButtonSetOnce.AutoSize = true;
+            this.radioButtonSetOnce.Location = new System.Drawing.Point(7, 159);
+            this.radioButtonSetOnce.Name = "radioButtonSetOnce";
+            this.radioButtonSetOnce.Size = new System.Drawing.Size(68, 17);
+            this.radioButtonSetOnce.TabIndex = 9;
+            this.radioButtonSetOnce.TabStop = true;
+            this.radioButtonSetOnce.Text = "Set once";
+            this.radioButtonSetOnce.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonRekryDecr
+            // 
+            this.radioButtonRekryDecr.AutoSize = true;
+            this.radioButtonRekryDecr.Location = new System.Drawing.Point(7, 139);
+            this.radioButtonRekryDecr.Name = "radioButtonRekryDecr";
+            this.radioButtonRekryDecr.Size = new System.Drawing.Size(79, 17);
+            this.radioButtonRekryDecr.TabIndex = 8;
+            this.radioButtonRekryDecr.TabStop = true;
+            this.radioButtonRekryDecr.Text = "Decreasing";
+            this.radioButtonRekryDecr.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonRecryIncr
+            // 
+            this.radioButtonRecryIncr.AutoSize = true;
+            this.radioButtonRecryIncr.Location = new System.Drawing.Point(7, 116);
+            this.radioButtonRecryIncr.Name = "radioButtonRecryIncr";
+            this.radioButtonRecryIncr.Size = new System.Drawing.Size(74, 17);
+            this.radioButtonRecryIncr.TabIndex = 7;
+            this.radioButtonRecryIncr.TabStop = true;
+            this.radioButtonRecryIncr.Text = "Increasing";
+            this.radioButtonRecryIncr.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonRekryConst
+            // 
+            this.radioButtonRekryConst.AutoSize = true;
+            this.radioButtonRekryConst.Checked = true;
+            this.radioButtonRekryConst.Location = new System.Drawing.Point(7, 93);
+            this.radioButtonRekryConst.Name = "radioButtonRekryConst";
+            this.radioButtonRekryConst.Size = new System.Drawing.Size(67, 17);
+            this.radioButtonRekryConst.TabIndex = 6;
+            this.radioButtonRekryConst.TabStop = true;
+            this.radioButtonRekryConst.Text = "Constant";
+            this.radioButtonRekryConst.UseVisualStyleBackColor = true;
+            // 
+            // textBoxStepsRekry
+            // 
+            this.textBoxStepsRekry.Location = new System.Drawing.Point(53, 198);
+            this.textBoxStepsRekry.Name = "textBoxStepsRekry";
+            this.textBoxStepsRekry.Size = new System.Drawing.Size(40, 20);
+            this.textBoxStepsRekry.TabIndex = 5;
+            // 
+            // textBoxEnergyHBoundary
+            // 
+            this.textBoxEnergyHBoundary.Location = new System.Drawing.Point(138, 38);
+            this.textBoxEnergyHBoundary.Name = "textBoxEnergyHBoundary";
+            this.textBoxEnergyHBoundary.Size = new System.Drawing.Size(70, 20);
+            this.textBoxEnergyHBoundary.TabIndex = 3;
+            // 
+            // buttonShowEnergy
+            // 
+            this.buttonShowEnergy.Location = new System.Drawing.Point(7, 50);
+            this.buttonShowEnergy.Name = "buttonShowEnergy";
+            this.buttonShowEnergy.Size = new System.Drawing.Size(118, 23);
+            this.buttonShowEnergy.TabIndex = 2;
+            this.buttonShowEnergy.Text = "Show energy";
+            this.buttonShowEnergy.UseVisualStyleBackColor = true;
+            this.buttonShowEnergy.Click += new System.EventHandler(this.buttonShowEnergy_Click);
+            // 
+            // buttonDistrEnergy
+            // 
+            this.buttonDistrEnergy.Location = new System.Drawing.Point(7, 20);
+            this.buttonDistrEnergy.Name = "buttonDistrEnergy";
+            this.buttonDistrEnergy.Size = new System.Drawing.Size(118, 23);
+            this.buttonDistrEnergy.TabIndex = 1;
+            this.buttonDistrEnergy.Text = "Distribute energy";
+            this.buttonDistrEnergy.UseVisualStyleBackColor = true;
+            this.buttonDistrEnergy.Click += new System.EventHandler(this.buttonDistrEnergy_Click);
+            // 
+            // buttonRunRecry
+            // 
+            this.buttonRunRecry.Location = new System.Drawing.Point(138, 225);
+            this.buttonRunRecry.Name = "buttonRunRecry";
+            this.buttonRunRecry.Size = new System.Drawing.Size(70, 23);
+            this.buttonRunRecry.TabIndex = 0;
+            this.buttonRunRecry.Text = "Run";
+            this.buttonRunRecry.UseVisualStyleBackColor = true;
+            this.buttonRunRecry.Click += new System.EventHandler(this.buttonRunRecry_Click);
+            // 
             // textBoxGS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 524);
+            this.ClientSize = new System.Drawing.Size(1027, 575);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -591,6 +824,8 @@ namespace Grain
             this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -645,6 +880,27 @@ namespace Grain
         private Label label12;
         private TextBox textBoxMCSteps;
         private Label label14;
+        private GroupBox groupBox6;
+        private Button buttonRunRecry;
+        private Button buttonDistrEnergy;
+        private Button buttonShowEnergy;
+        private TextBox textBoxEnergyHBoundary;
+        private RadioButton radioButtonSetOnce;
+        private RadioButton radioButtonRekryDecr;
+        private RadioButton radioButtonRecryIncr;
+        private RadioButton radioButtonRekryConst;
+        private TextBox textBoxStepsRekry;
+        private Label label16;
+        private Label label15;
+        private TextBox textBoxRecryFactor;
+        private Label label17;
+        private TextBox textBoxRecryNucleons;
+        private TextBox textBoxInStep;
+        private Label label18;
+        private TextBox textBoxEnergyHGrain;
+        private CheckBox checkBoxHetero;
+        private Label label20;
+        private Label label19;
 
     }
 }

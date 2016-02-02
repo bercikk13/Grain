@@ -12,31 +12,41 @@ namespace Grain
 {
     public partial class textBoxGS : Form
     {
-        public int gridSizeX = 200;
-        public int gridSizeY = 200;
+        public int gridSizeX = 100;
+        public int gridSizeY = 100;
         int cellSize;
         Automat automat;
+        public bool invertedColors; 
 
 
 
         public textBoxGS()
         {
             InitializeComponent();
-            textBoxGSx.Text = Convert.ToString(100);
-            textBoxGSy.Text = Convert.ToString(100);
+            textBoxGSx.Text = Convert.ToString(150);
+            textBoxGSy.Text = Convert.ToString(150);
             textBoxNucleons.Text = Convert.ToString(10);
-            textBoxPixel.Text = Convert.ToString(2);
+            textBoxPixel.Text = Convert.ToString(3);
             textBoxSteps.Text = Convert.ToString(50);
             textBoxInclusions.Text = Convert.ToString(10);
             textBoxInclSize.Text = Convert.ToString(2);
             textBoxProbability.Text = Convert.ToString(50);
             textBoxMCAmount.Text = Convert.ToString(5);
             textBoxMCSteps.Text = Convert.ToString(100);
+            textBoxEnergyHBoundary.Text = Convert.ToString(10);
+            textBoxRecryNucleons.Text = Convert.ToString(5);
+            textBoxRecryFactor.Text = Convert.ToString(5);
+            textBoxStepsRekry.Text = Convert.ToString(100);
+            textBoxInStep.Text = Convert.ToString(5);
+            textBoxEnergyHGrain.Text = Convert.ToString(5);
+            checkBoxHetero.Checked = true;
+
                 
             setNucleons.Enabled = false;
             runAutomat.Enabled = false;
             runOneStep.Enabled = false;
             clear.Enabled = false;
+            invertedColors = false;
 
             
                         
@@ -65,18 +75,32 @@ namespace Grain
                     for (int x = 0; x < gridSizeX; ++x)
                         for (int y = 0; y < gridSizeY; ++y)
                         {
-                            if (automat.firstGrid[x][y].state != 0)
-                                e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.FromArgb(automat.firstGrid[x][y].color.R, automat.firstGrid[x][y].color.G, automat.firstGrid[x][y].color.B)), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
+                            if (invertedColors)
+                            {
+                                if (automat.firstGrid[x][y].H == int.Parse(textBoxEnergyHBoundary.Text))
+                                {
+                                    e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.Black), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
+                                }
+                                else if (automat.firstGrid[x][y].H == int.Parse(textBoxEnergyHGrain.Text))
+                                {
+                                    e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.Red), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
+                                }
+                                else if (automat.firstGrid[x][y].H == 0)
+                                {
+                                    e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.Blue), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
+                                }
+                            }
+                            else
+                            {
+                                if (automat.firstGrid[x][y].state != 0)
+                                    e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.FromArgb(automat.firstGrid[x][y].color.R, automat.firstGrid[x][y].color.G, automat.firstGrid[x][y].color.B)), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
 
-                            if (automat.firstGrid[x][y].state == -1)
-                            {
-                                e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.Black), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
+                                if (automat.firstGrid[x][y].state == -1)
+                                {
+                                    e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.Black), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
+                                }
                             }
-                           /* if (automat.firstGrid[x][y].isBorder == true)
-                            {
-                                e.Graphics.FillRectangle(new System.Drawing.SolidBrush(Color.Black), new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize));
-                            }
-                             * */
+                           
                         }
                 }
             }
@@ -327,9 +351,7 @@ namespace Grain
 
         private void buttonSetMCCells_Click(object sender, EventArgs e)
         {
-            automat.setCellsFoMC(int.Parse(textBoxMCAmount.Text));
-
-            
+            automat.setCellsFoMC(int.Parse(textBoxMCAmount.Text));      
             PB.Refresh();
         }
 
@@ -357,6 +379,89 @@ namespace Grain
 
             
         }
+
+        private void buttonRunRecry_Click(object sender, EventArgs e)
+        {
+
+            int steps = int.Parse(textBoxStepsRekry.Text);
+            int nucleons = int.Parse(textBoxRecryNucleons.Text);
+            int stepToNucleons = int.Parse(textBoxInStep.Text);
+            int factor = int.Parse(textBoxRecryFactor.Text);
+
+            if(radioButtonSetOnce.Checked == true)
+            {
+                automat.setBordersForRecry(checkBoxHetero.Checked);
+                automat.setNewState(nucleons);
+
+                for (int i = 0; i < steps; i++)
+                {
+                    automat.recrystallization("Moore");
+                    PB.Refresh();
+                }
+            }
+            else if(radioButtonRekryConst.Checked == true)
+            {
+                for (int i = 0; i < steps; i++)
+                {
+                    if (i % stepToNucleons == 0)
+                    {
+                        automat.setBordersForRecry(checkBoxHetero.Checked);
+                        automat.setNewState(nucleons);
+                    }
+                    automat.recrystallization("Moore");
+                    PB.Refresh();
+                }
+            }
+            else if (radioButtonRecryIncr.Checked == true)
+            {
+                for (int i = 0; i < steps; i++)
+                {
+                    if (i % stepToNucleons == 0)
+                    {
+                        automat.setBordersForRecry(checkBoxHetero.Checked);
+                        automat.setNewState(nucleons);
+                        nucleons += factor;
+                    }
+                    automat.recrystallization("Moore");
+                    PB.Refresh();
+                }
+            }
+            else if(radioButtonRekryDecr.Checked == true)
+            {
+                for (int i = 0; i < steps; i++)
+                {
+                    if (i % stepToNucleons == 0 && nucleons - factor > 0)
+                    {                     
+                        automat.setBordersForRecry(checkBoxHetero.Checked);
+                        automat.setNewState(nucleons);
+                        nucleons -= factor;
+                    }
+                    automat.recrystallization("Moore");
+                    PB.Refresh();
+                }
+            }
+
+            
+        }
+
+        private void buttonDistrEnergy_Click(object sender, EventArgs e)
+        {
+            automat.setBordersForRecry(checkBoxHetero.Checked);
+            automat.distributeEnergy(int.Parse(textBoxEnergyHBoundary.Text), int.Parse(textBoxEnergyHGrain.Text));
+            PB.Refresh();
+        }
+
+        private void buttonShowEnergy_Click(object sender, EventArgs e)
+        {
+            if (invertedColors == false)
+                invertedColors = true;
+            else
+                invertedColors = false;
+
+            PB.Refresh();
+        }
+
+
 
 
 
