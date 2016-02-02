@@ -1,0 +1,18 @@
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\bin\Debug\Grain.exe.config
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\bin\Debug\Grain.exe
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\bin\Debug\Grain.pdb
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\obj\Debug\Grain.Properties.Resources.resources
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\obj\Debug\Grain.csproj.GenerateResource.Cache
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\obj\Debug\Grain.exe
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\obj\Debug\Grain.pdb
+c:\users\marcin\documents\visual studio 2013\Projects\Grain\Grain\obj\Debug\Grain.csprojResolveAssemblyReference.cache
+C:\Users\Marcin\documents\visual studio 2013\Projects\Grain\Grain\obj\Debug\Grain.textBoxGS.resources
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\bin\Debug\Grain.exe.config
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\obj\Debug\Grain.exe
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\obj\Debug\Grain.pdb
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\bin\Debug\Grain.exe
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\bin\Debug\Grain.pdb
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\obj\Debug\Grain.csprojResolveAssemblyReference.cache
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\obj\Debug\Grain.textBoxGS.resources
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\obj\Debug\Grain.Properties.Resources.resources
+C:\Users\berci\Desktop\Rozrost\Grain\Grain\obj\Debug\Grain.csproj.GenerateResource.Cache
